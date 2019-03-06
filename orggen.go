@@ -46,11 +46,11 @@ func (org Organization) setLeaderType() string {
 	leaderType := "individual"
 
 	if org.Type.CanBeLedByGroup {
-		x := rand.Intn(10)
+  x := rand.Intn(10)
 
-		if x >= 9 {
-			leaderType = "group"
-		}
+  if x >= 9 {
+  	leaderType = "group"
+  }
 	}
 
 	return leaderType
@@ -65,11 +65,11 @@ func (org Organization) setName() string {
 
 	tmpl, err := template.New("orgname").Parse(org.Type.NameTemplate)
 	if err != nil {
-		panic(err)
+  panic(err)
 	}
 	err = tmpl.Execute(&tplOutput, nameData)
 	if err != nil {
-		panic(err)
+  panic(err)
 	}
 	name := tplOutput.String()
 

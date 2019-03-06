@@ -1,3 +1,3 @@
-# orggen
+# Organization Generator
 
-Just another generator.
+Just another generator. This one's for organizations.
