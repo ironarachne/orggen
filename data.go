@@ -28,6 +28,7 @@ var (
 	types = []string{
   "adventuring company",
   "church",
+  "guild",
   "mercenary company",
 	}
 
