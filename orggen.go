@@ -86,7 +86,7 @@ func Generate() Organization {
 
 	org.Type = typeData[utility.RandomItem(types)]
 	org.SizeClass = sizeClassData[utility.RandomItem(sizeClasses)]
-	org.Size = rand.Intn(org.SizeClass.MaxSize) + org.SizeClass.MinSize
+	org.Size = rand.Intn(org.SizeClass.MaxSize-org.SizeClass.MinSize) + org.SizeClass.MinSize
 	org.Name = org.setName()
 	org.LeaderType = org.setLeaderType()
 	org.PrimaryTrait = org.setTrait()
