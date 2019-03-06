@@ -42,19 +42,21 @@ type SizeClass struct {
 	MaxSize int
 }
 
-func (org Organization) setLeaderType() {
-	org.LeaderType = "individual"
+func (org Organization) setLeaderType() string {
+	leaderType := "individual"
 
 	if org.Type.CanBeLedByGroup {
 		x := rand.Intn(10)
 
 		if x >= 9 {
-			org.LeaderType = "group"
+			leaderType = "group"
 		}
 	}
+
+	return leaderType
 }
 
-func (org Organization) setName() {
+func (org Organization) setName() string {
 	var tplOutput bytes.Buffer
 
 	firstPart := utility.RandomItem(org.Type.NameFirstParts)
@@ -71,11 +73,11 @@ func (org Organization) setName() {
 	}
 	name := tplOutput.String()
 
-	org.Name = name
+	return name
 }
 
-func (org Organization) setTrait() {
-	org.PrimaryTrait = utility.RandomItem(org.Type.PossibleTraits)
+func (org Organization) setTrait() string {
+	return utility.RandomItem(org.Type.PossibleTraits)
 }
 
 // Generate generates a org
@@ -85,9 +87,9 @@ func Generate() Organization {
 	org.Type = typeData[utility.RandomItem(types)]
 	org.SizeClass = sizeClassData[utility.RandomItem(sizeClasses)]
 	org.Size = rand.Intn(org.SizeClass.MaxSize) + org.SizeClass.MinSize
-	org.setName()
-	org.setLeaderType()
-	org.setTrait()
+	org.Name = org.setName()
+	org.LeaderType = org.setLeaderType()
+	org.PrimaryTrait = org.setTrait()
 
 	return org
 }
