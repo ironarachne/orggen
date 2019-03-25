@@ -5,7 +5,7 @@ import (
 	"html/template"
 	"math/rand"
 
-	"github.com/ironarachne/utility"
+	"github.com/ironarachne/random"
 )
 
 // NameData is name data
@@ -46,11 +46,11 @@ func (org Organization) setLeaderType() string {
 	leaderType := "individual"
 
 	if org.Type.CanBeLedByGroup {
-  x := rand.Intn(10)
+		x := rand.Intn(10)
 
-  if x >= 9 {
-  	leaderType = "group"
-  }
+		if x >= 9 {
+			leaderType = "group"
+		}
 	}
 
 	return leaderType
@@ -59,17 +59,17 @@ func (org Organization) setLeaderType() string {
 func (org Organization) setName() string {
 	var tplOutput bytes.Buffer
 
-	firstPart := utility.RandomItem(org.Type.NameFirstParts)
-	secondPart := utility.RandomItem(org.Type.NameSecondParts)
+	firstPart := random.Item(org.Type.NameFirstParts)
+	secondPart := random.Item(org.Type.NameSecondParts)
 	nameData := NameData{firstPart, secondPart}
 
 	tmpl, err := template.New("orgname").Parse(org.Type.NameTemplate)
 	if err != nil {
-  panic(err)
+		panic(err)
 	}
 	err = tmpl.Execute(&tplOutput, nameData)
 	if err != nil {
-  panic(err)
+		panic(err)
 	}
 	name := tplOutput.String()
 
@@ -77,15 +77,15 @@ func (org Organization) setName() string {
 }
 
 func (org Organization) setTrait() string {
-	return utility.RandomItem(org.Type.PossibleTraits)
+	return random.Item(org.Type.PossibleTraits)
 }
 
 // Generate generates a org
 func Generate() Organization {
 	org := Organization{}
 
-	org.Type = typeData[utility.RandomItem(types)]
-	org.SizeClass = sizeClassData[utility.RandomItem(sizeClasses)]
+	org.Type = typeData[random.Item(types)]
+	org.SizeClass = sizeClassData[random.Item(sizeClasses)]
 	org.Size = rand.Intn(org.SizeClass.MaxSize-org.SizeClass.MinSize) + org.SizeClass.MinSize
 	org.Name = org.setName()
 	org.LeaderType = org.setLeaderType()
